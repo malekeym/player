@@ -11,7 +11,7 @@ let videoTime = timerArea.querySelector('.videoTime');
 let volumeIcon=controls.querySelector('.volume .icon');
 let volumeProgressBar=controls.querySelector('.volume__progress');
 let volumeProgressBarInput=volumeProgressBar.querySelector('input')
-// let fullscreen = controls.querySelector('.fullscreen');
+let fullscreen = controls.querySelector('.fullscreen');
 media.volume=0.5;
 media.addEventListener('timeupdate' , function() {
     currentTime.textContent = getTime(media.currentTime);
@@ -83,3 +83,27 @@ function getTime(time) {
 
     return minuteValue + ':' + secondsValue
 } 
+fullscreen.addEventListener('click' , function() {
+    console.log(document.fullscreenElement)
+    if (!document.fullscreenElement) {
+        if(playerArea.requestFullscreen) {
+            playerArea.requestFullscreen();
+        } else if(playerArea.mozFullScreenElement) {
+            playerArea.mozFullScreenElement()
+        } else if(playerArea.msFullscreenElement) {
+            playerArea.msFullscreenElement()
+        } else if(playerArea.webkitFullscreenElement) {
+            playerArea.webkitFullscreenElement()
+        }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen(); 
+      } else if(document.mozCancelFullscreen) {
+        document.mozCancelFullscreen(); 
+      } else if(document.msCancelFullscreen) {
+        document.msCancelFullscreen(); 
+      } else if(document.webkitCancelFullscreen) {
+        document.webkitCancelFullscreen(); 
+      }
+    }
+})
