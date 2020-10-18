@@ -8,12 +8,20 @@ let timerBar = controls.querySelector('.controls__progressbar-current');
 let timerArea = controls.querySelector('.timer');
 let currentTime = timerArea.querySelector('.currentTime');
 let videoTime = timerArea.querySelector('.videoTime');
+let volumeIcon=controls.querySelector('.volume .icon');
+let volumeProgressBar=controls.querySelector('.volume__progress');
+let volumeProgressBarInput=volumeProgressBar.querySelector('input')
 // let fullscreen = controls.querySelector('.fullscreen');
+media.volume=0.5;
 media.addEventListener('timeupdate' , function() {
     currentTime.textContent = getTime(media.currentTime);
     let barLength = (media.currentTime / media.duration) * 100;
     timerBar.style = `background : linear-gradient(90deg, rgba(230,126,34,1) ${barLength}%, #e1e1e1 0%);`
     timerBar.value = barLength;
+})
+volumeProgressBarInput.addEventListener("input",function(){
+    media.volume=this.value/100;
+    this.style=`background: linear-gradient(90deg, rgba(230,126,34,1) ${this.value}%, #e1e1e1 ${this.value}%);`
 })
 play.addEventListener('click' , function() {
     videoTime.textContent = getTime(media.duration);
@@ -28,7 +36,9 @@ play.addEventListener('click' , function() {
 timerBar.addEventListener('input' , function() {
     media.currentTime = (this.value / 100) * media.duration
 })
-
+volumeIcon.addEventListener('click',function(){
+    volumeProgressBar.classList.toggle('active')
+})
 rwd.addEventListener('click' , function() {
     media.currentTime = media.currentTime - 5;
 });
